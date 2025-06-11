@@ -28,8 +28,8 @@ const TagCard = ({
   isButton,
   handleRemove,
 }: Props) => {
-   const iconDescription = getTechDescription(name);
   const iconClass = getDeviconClassName(name);
+  const iconDescription = getTechDescription(name);
 
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -72,7 +72,8 @@ const TagCard = ({
       </Link>
     );
   }
-   return (
+
+  return (
     <Link href={ROUTES.TAG(_id)} className="shadow-light100_darknone">
       <article className="background-light900_dark200 light-border flex w-full flex-col rounded-2xl border px-8 py-10 sm:w-[260px]">
         <div className="flex items-center justify-between gap-3">
@@ -91,7 +92,7 @@ const TagCard = ({
             {questions}+
           </span>
           Questions
-        </p>More actions
+        </p>
       </article>
     </Link>
   );

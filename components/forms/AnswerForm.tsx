@@ -18,7 +18,7 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { toast } from "sonner";
+import { toast } from "@/hooks/use-toast";
 import { createAnswer } from "@/lib/actions/answer.action";
 import { api } from "@/lib/api";
 import { AnswerSchema } from "@/lib/validations";
@@ -57,26 +57,30 @@ const AnswerForm = ({ questionId, questionTitle, questionContent }: Props) => {
       if (result.success) {
         form.reset();
 
-        
-        toast.success("Success",{description: "Your answer has been posted successfully",});
+        toast({
+          title: "Success",
+          description: "Your answer has been posted successfully",
+        });
 
         if (editorRef.current) {
           editorRef.current.setMarkdown("");
         }
       } else {
-        toast.error("Error",{description: result.error?.message,});
-        
+        toast({
+          title: "Error",
+          description: result.error?.message,
+          variant: "destructive",
+        });
       }
     });
   };
 
   const generateAIAnswer = async () => {
     if (session.status !== "authenticated") {
-       
-      return toast.info("Please log in",
-        {description: "You need to be logged in to use this feature",});
-     
-      
+      return toast({
+        title: "Please log in",
+        description: "You need to be logged in to use this feature",
+      });
     }
 
     setIsAISubmitting(true);
@@ -91,7 +95,11 @@ const AnswerForm = ({ questionId, questionTitle, questionContent }: Props) => {
       );
 
       if (!success) {
-        toast.error("Error",{description: error.error?.message,});
+        return toast({
+          title: "Error",
+          description: error?.message,
+          variant: "destructive",
+        });
       }
 
       const formattedAnswer = data.replace(/<br>/g, " ").toString().trim();
@@ -103,16 +111,19 @@ const AnswerForm = ({ questionId, questionTitle, questionContent }: Props) => {
         form.trigger("content");
       }
 
-      toast.success("Success",
-        {description: "AI generated answer has been generated",}
-      );
-      
+      toast({
+        title: "Success",
+        description: "AI generated answer has been generated",
+      });
     } catch (error) {
-      
-      toast.error("Error",{ description:
+      toast({
+        title: "Error",
+        description:
           error instanceof Error
             ? error.message
-            : "There was a problem with your request",});
+            : "There was a problem with your request",
+        variant: "destructive",
+      });
     } finally {
       setIsAISubmitting(false);
     }

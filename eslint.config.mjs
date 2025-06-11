@@ -20,8 +20,7 @@ const config = [
     "next/core-web-vitals",
     "next/typescript",
     "standard",
-    "plugin:tailwindcss/recommended",
-    "plugin:prettier/recommended",
+    // "plugin:tailwindcss/recommended",
     "prettier"
   ),
   {
@@ -56,7 +55,7 @@ const config = [
           },
         },
       ],
-      "comma-dangle": "es5",
+      "comma-dangle": "off",
     },
   },
   {

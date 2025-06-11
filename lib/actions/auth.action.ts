@@ -9,8 +9,8 @@ import User from "@/database/user.model";
 
 import action from "../handlers/action";
 import handleError from "../handlers/error";
-import { SignInSchema, SignUpSchema } from "../validations";
 import { NotFoundError } from "../http-errors";
+import { SignInSchema, SignUpSchema } from "../validations";
 
 export async function signUpWithCredentials(
   params: AuthCredentials
@@ -22,7 +22,7 @@ export async function signUpWithCredentials(
   }
 
   const { name, username, email, password } = validationResult.params!;
-  const image="https://ui-avatars.com/api/?name=" + username;
+
   const session = await mongoose.startSession();
   session.startTransaction();
 
@@ -41,7 +41,7 @@ export async function signUpWithCredentials(
 
     const hashedPassword = await bcrypt.hash(password, 12);
 
-    const [newUser] = await User.create([{ username, name, email ,image}], {
+    const [newUser] = await User.create([{ username, name, email }], {
       session,
     });
 

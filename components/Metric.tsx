@@ -16,7 +16,7 @@ interface Props {
 }
 
 const Metric = ({
-  imgUrl="/icons/user.svg",
+  imgUrl,
   alt,
   value,
   title,
@@ -39,7 +39,7 @@ const Metric = ({
       <p className={`${textStyles} flex items-center gap-1`}>
         {value}
 
-         {title ? (
+        {title ? (
           <span className={cn(`small-regular line-clamp-1`, titleStyles)}>
             {title}
           </span>

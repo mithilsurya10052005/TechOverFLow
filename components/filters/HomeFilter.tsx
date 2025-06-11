@@ -2,27 +2,20 @@
 
 import { useSearchParams, useRouter } from "next/navigation";
 import React, { useState } from "react";
-import { useSession } from "next-auth/react";
+
 import { formUrlQuery, removeKeysFromUrlQuery } from "@/lib/url";
 import { cn } from "@/lib/utils";
 
 import { Button } from "../ui/button";
-import logger from "@/lib/logger";
 
 const filters = [
-  { name: "React", value: "react" },
-  { name: "JavaScript", value: "javascript" },
-
-  // { name: "Newest", value: "newest" },
-  // { name: "Popular", value: "popular" },
-  // { name: "Unanswered", value: "unanswered" },
-  // { name: "Recommeded", value: "recommended" },
+  { name: "Newest", value: "newest" },
+  { name: "Popular", value: "popular" },
+  { name: "Unanswered", value: "unanswered" },
+  { name: "Recommeded", value: "recommended" },
 ];
 
 const HomeFilter = () => {
-  const session= useSession();
-  logger.info(session, "Session Info");
-
   const router = useRouter();
   const searchParams = useSearchParams();
   const filterParams = searchParams.get("filter");

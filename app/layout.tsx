@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import "./globals.css";
-import { ThemeProvider } from "@/context/Theme";
-import Navbar from "@/components/navigation/navbar";
 import { SessionProvider } from "next-auth/react";
-import { auth } from "@/auth";
-import { Toaster } from "sonner";
+import { ReactNode } from "react";
 
+import "./globals.css";
+import { auth } from "@/auth";
+import { Toaster } from "@/components/ui/toaster";
+import ThemeProvider from "@/context/Theme";
 
 const inter = localFont({
   src: "./fonts/InterVF.ttf",
@@ -21,7 +21,7 @@ const spaceGrotesk = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Tech Overflow",
+  title: "TechOverFlow",
   description:
     "A community-driven platform for asking and answering programming questions. Get help, share knowledge, and collaborate with developers from around the world. Explore topics in web development, mobile app development, algorithms, data structures, and more.",
   icons: {
@@ -29,39 +29,35 @@ export const metadata: Metadata = {
   },
 };
 
-const RootLayout=async ({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) =>{
+const RootLayout = async ({ children }: { children: ReactNode }) => {
   const session = await auth();
-  return (
 
+  return (
     <html lang="en" suppressHydrationWarning>
-       <head>
+      <head>
         <link
           rel="stylesheet"
           type="text/css"
           href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"
         />
       </head>
-      <body
-        className={`${inter.className} ${spaceGrotesk.variable} antialiased`}
-      >
-        <SessionProvider session={session}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
+      <SessionProvider session={session}>
+        <body
+          className={`${inter.className} ${spaceGrotesk.variable} antialiased`}
         >
-         
-          {children}
-          <Toaster/>
-        </ThemeProvider>
-        </SessionProvider>
-      </body>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+          <Toaster />
+        </body>
+      </SessionProvider>
     </html>
   );
-}
+};
+
 export default RootLayout;
